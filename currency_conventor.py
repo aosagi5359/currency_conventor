@@ -100,7 +100,6 @@ def gui_interface():
     # 運行主循環
     root.mainloop()
 
-# 主函數
 def main():
     print("選擇轉換介面:")
     print("1. 命令行介面")
