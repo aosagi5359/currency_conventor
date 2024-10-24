@@ -5,17 +5,21 @@ from tkinter import ttk, messagebox
 
 # 貨幣轉換函數
 def crnc_cvt(api_key, from_crnc, to_crnc, amount):
+     # 建立 API 請求的 URL，包含 API 金鑰和轉換的貨幣及數量
     url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{from_crnc}/{to_crnc}/{amount}"
     
     try:
+        # 發送 GET 請求到 API
         response = requests.get(url)
         data = response.json()
+        # 檢查回應是否成功
         if response.status_code == 200 and data.get('result') == 'success':
             cvt_amount = data['conversion_result']
             conversion_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             result = f"{amount} {from_crnc} 為 {cvt_amount} {to_crnc}。\n轉換時間: {conversion_time}"
             return result
         else:
+            # 若資料擷取失敗，顯示錯誤信息
             return f"資料擷取失敗: {data.get('error-type', '未知錯誤')}"
     except requests.exceptions.RequestException as e:
         return f"連接錯誤: {e}"
